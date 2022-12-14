@@ -31,4 +31,10 @@ describe('Form', () => {
       screen.getByRole<HTMLOptionElement>('option', { name: 'Brazil' }).selected
     ).toBeFalsy();
   });
+
+  it('should render "First name" field', () => {
+    render(<App />);
+
+    expect(screen.getByRole('textbox', { name: /first name/i })).toBeTruthy();
+  });
 });

@@ -9,6 +9,9 @@ export function App() {
         <option>Ghana</option>
         <option>Brazil</option>
       </select>
+
+      <label htmlFor="firstName">First Name</label>
+      <input aria-label="First name" type="text" name="firstName" />
     </form>
   );
 }
