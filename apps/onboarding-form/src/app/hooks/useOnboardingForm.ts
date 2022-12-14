@@ -47,6 +47,12 @@ export const useOnboardingForm = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => setNumberOfChildren(event.target.value);
 
+  const [socialInsuranceNumber, setSocialInsuranceNumber] = useState('');
+  const isSocialInsuranceNumberValid = socialInsuranceNumber.trim().length > 0;
+  const onSocialInsuranceNumberChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => setSocialInsuranceNumber(event.target.value);
+
   const validateForm = () => {
     if (country === 'Brazil') {
       return (
@@ -68,6 +74,18 @@ export const useOnboardingForm = () => {
         isHolidayAllowanceValid &&
         isMaritalStatusValid &&
         isNumberOfChildrenValid
+      );
+    }
+
+    if (country === 'Spain') {
+      return (
+        isCountryValid &&
+        isFirstNameValid &&
+        isLastNameValid &&
+        isDateOfBirthValid &&
+        isHolidayAllowanceValid &&
+        isMaritalStatusValid &&
+        isSocialInsuranceNumberValid
       );
     }
 
@@ -95,6 +113,11 @@ export const useOnboardingForm = () => {
         maritalStatus,
         numberOfChildren: Number(numberOfChildren),
       }),
+
+      ...(country === 'Spain' && {
+        maritalStatus,
+        socialInsuranceNumber,
+      }),
     };
 
     console.log(onboardedEmployee);
@@ -118,5 +141,7 @@ export const useOnboardingForm = () => {
     onMaritalStatusChange,
     numberOfChildren,
     onNumberOfChildrenChange,
+    socialInsuranceNumber,
+    onSocialInsuranceNumberChange,
   };
 };

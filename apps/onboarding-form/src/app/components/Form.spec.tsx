@@ -72,6 +72,7 @@ describe('Form', () => {
     workingHours?: string;
     maritalStatus?: string;
     numberOfChildren?: string;
+    socialInsuranceNumber?: string;
   }) => {
     fireEvent.change(firstNameField, {
       target: { value: fixture.firstName },
@@ -106,6 +107,12 @@ describe('Form', () => {
         target: { value: fixture.numberOfChildren },
       });
     }
+
+    if (socialInsuranceNumberField) {
+      fireEvent.change(socialInsuranceNumberField, {
+        target: { value: fixture.socialInsuranceNumber },
+      });
+    }
   };
 
   const clearForm = () => {
@@ -117,6 +124,7 @@ describe('Form', () => {
       workingHours: '',
       numberOfChildren: '',
       maritalStatus: '',
+      socialInsuranceNumber: '',
     });
   };
 
@@ -277,6 +285,30 @@ describe('Form', () => {
         holidayAllowance: 30,
         maritalStatus: 'Single',
         numberOfChildren: 1,
+      });
+    });
+
+    test('for Spain, if all the fields are filled correctly, log the onboarded employee to the console', () => {
+      arrangeForm(Country.Spain);
+      fillForm({
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: '30',
+        maritalStatus: 'Single',
+        socialInsuranceNumber: '1234567890A',
+      });
+
+      submitForm();
+
+      expect(consoleLog).toHaveBeenCalledWith({
+        country: 'Spain',
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: 30,
+        maritalStatus: 'Single',
+        socialInsuranceNumber: '1234567890A',
       });
     });
   });

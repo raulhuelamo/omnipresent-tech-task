@@ -22,6 +22,8 @@ export const Form = () => {
     onMaritalStatusChange,
     numberOfChildren,
     onNumberOfChildrenChange,
+    socialInsuranceNumber,
+    onSocialInsuranceNumberChange,
   } = useOnboardingForm();
 
   return (
@@ -126,14 +128,18 @@ export const Form = () => {
             aria-label="Marital status"
             type="text"
             name="maritalStatus"
+            value={maritalStatus}
+            onChange={onMaritalStatusChange}
             required
           />
 
           <label htmlFor="socialInsuranceNumber">Social insurance number</label>
           <input
-            aria-label="Social insurance  number"
+            aria-label="Social insurance number"
             type="text"
             name="socialInsuranceNumber"
+            value={socialInsuranceNumber}
+            onChange={onSocialInsuranceNumberChange}
             required
           />
         </>
