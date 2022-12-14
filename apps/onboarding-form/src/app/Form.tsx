@@ -1,22 +1,49 @@
 import { useState } from 'react';
 
+const toShortISOString = (date: Date): string => {
+  return date.toISOString().split('T')[0];
+};
+
 export const Form = () => {
+  const today = toShortISOString(new Date());
+
+  const [country, setCountry] = useState('');
+  // TODO: Validate enum
+  const isCountryValid = country.trim().length > 0;
+  const onCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
+    setCountry(event.target.value);
+
   const [firstName, setFirstName] = useState('');
   const isFirstNameValid = firstName.trim().length > 0;
+  const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setFirstName(event.target.value);
 
   const [lastName, setLastName] = useState('');
   const isLastNameValid = lastName.trim().length > 0;
+  const onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setLastName(event.target.value);
 
-  const [country, setCountry] = useState('');
-  const isCountryValid = country.trim().length > 0;
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  // TODO: Validate date format
+  const isDateOfBirthValid = dateOfBirth.trim().length > 0;
+  const onDateOfBirthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const date = toShortISOString(new Date(event.target.value));
+    setDateOfBirth(date);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isValid = isFirstNameValid && isCountryValid && isLastNameValid;
+    const isValid =
+      isFirstNameValid &&
+      isCountryValid &&
+      isLastNameValid &&
+      isDateOfBirthValid;
+
     if (!isValid) return;
 
-    console.log({ country, firstName, lastName });
+    const onboardedEmployee = { country, firstName, lastName, dateOfBirth };
+    console.log(onboardedEmployee);
   };
 
   return (
@@ -24,7 +51,7 @@ export const Form = () => {
       <select
         name="country"
         value={country}
-        onChange={(event) => setCountry(event.target.value)}
+        onChange={onCountryChange}
         required
       >
         <option value="" disabled>
@@ -41,7 +68,7 @@ export const Form = () => {
         type="text"
         name="firstName"
         value={firstName}
-        onChange={(event) => setFirstName(event.target.value)}
+        onChange={onFirstNameChange}
         required
       />
 
@@ -51,7 +78,7 @@ export const Form = () => {
         type="text"
         name="lastName"
         value={lastName}
-        onChange={(event) => setLastName(event.target.value)}
+        onChange={onLastNameChange}
         required
       />
 
@@ -60,8 +87,9 @@ export const Form = () => {
         type="date"
         name="dateOfBirth"
         aria-label="Date of birth"
-        min="2018-01-01"
-        max="2018-12-31"
+        max={today}
+        value={dateOfBirth}
+        onChange={onDateOfBirthChange}
         required
       ></input>
 
