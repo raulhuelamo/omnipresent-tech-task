@@ -3,10 +3,12 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Form } from './Form';
 
 describe('Form', () => {
-  describe('for every country', () => {
-    it('should render a "Country of work" field, and its options', () => {
+  describe('by default', () => {
+    beforeEach(() => {
       render(<Form />);
+    });
 
+    it('should render a "Country of work" field, and its options', () => {
       expect(screen.getByRole('combobox')).toBeTruthy();
       expect(
         screen.getByRole<HTMLOptionElement>('option', { name: /country/i })
@@ -27,86 +29,99 @@ describe('Form', () => {
     });
 
     it('should render "First name" field', () => {
-      render(<Form />);
-
       expect(screen.getByLabelText(/first name/i)).toBeTruthy();
     });
 
     it('should render "Last name" field', () => {
-      render(<Form />);
-
       expect(screen.getByLabelText(/last name/i)).toBeTruthy();
     });
 
     it('should render "Date of birth" field', () => {
-      render(<Form />);
-
       expect(screen.getByLabelText(/date of birth/i)).toBeTruthy();
     });
 
     it('should render "Holiday allowance" field', () => {
-      render(<Form />);
-
       expect(screen.getByLabelText(/holiday allowance/i)).toBeTruthy();
     });
   });
 
-  describe('for Brazil', () => {
-    it('should render "Working hours" field', () => {
+  describe('when the selected country is Brazil', () => {
+    beforeEach(() => {
       render(<Form />);
 
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'Brazil' },
       });
+    });
 
+    it('should have Brazil selected as a country', () => {
       expect(
         screen.getByRole<HTMLOptionElement>('option', { name: 'Brazil' })
           .selected
       ).toBeTruthy();
+    });
 
+    it('should render its country-specific fields', () => {
       expect(screen.getByLabelText(/working hours/i)).toBeTruthy();
+    });
+
+    it('should not render any country-specific fields from different countries', () => {
       expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
       expect(screen.queryByLabelText(/marital status/i)).toBeFalsy();
       expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
     });
   });
 
-  describe('for Spain', () => {
-    it('should not render "Working hours" field', () => {
+  describe('when the selected country is Spain', () => {
+    beforeEach(() => {
       render(<Form />);
 
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'Spain' },
       });
+    });
 
+    it('should have Spain selected as a country', () => {
       expect(
         screen.getByRole<HTMLOptionElement>('option', { name: 'Spain' })
           .selected
       ).toBeTruthy();
+    });
 
-      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
-      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
+    it('should render its country-specific fields', () => {
       expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
       expect(screen.queryByLabelText(/social insurance number/i)).toBeTruthy();
     });
+
+    it('should not render any country-specific fields from different countries', () => {
+      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
+    });
   });
 
-  describe('for Ghana', () => {
-    it('should not render "Working hours" field', () => {
+  describe('when the selected country is Ghana', () => {
+    beforeEach(() => {
       render(<Form />);
 
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'Ghana' },
       });
+    });
 
+    it('should have Ghana selected as a country', () => {
       expect(
         screen.getByRole<HTMLOptionElement>('option', { name: 'Ghana' })
           .selected
       ).toBeTruthy();
+    });
 
-      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
+    it('should render its country-specific fields', () => {
       expect(screen.queryByLabelText(/number of children/i)).toBeTruthy();
       expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
+    });
+
+    it('should not render any country-specific fields from different countries', () => {
+      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
       expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
     });
   });
