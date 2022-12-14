@@ -37,4 +37,22 @@ describe('Form', () => {
 
     expect(screen.getByRole('textbox', { name: /first name/i })).toBeTruthy();
   });
+
+  it('should render "Last name" field', () => {
+    render(<App />);
+
+    expect(screen.getByRole('textbox', { name: /last name/i })).toBeTruthy();
+  });
+
+  it('should render "Date of birth" field', () => {
+    render(<App />);
+
+    expect(screen.getByLabelText(/date of birth/i)).toBeTruthy();
+  });
+
+  it('should render "Holiday allowance" field', () => {
+    render(<App />);
+
+    expect(screen.getByLabelText(/holiday allowance/i)).toBeTruthy();
+  });
 });
