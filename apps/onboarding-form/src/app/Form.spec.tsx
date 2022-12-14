@@ -43,6 +43,10 @@ describe('Form', () => {
     it('should render "Holiday allowance" field', () => {
       expect(screen.getByLabelText(/holiday allowance/i)).toBeTruthy();
     });
+
+    it('should render a Submit button', () => {
+      expect(screen.getByRole('button', { name: 'Submit' })).toBeTruthy();
+    });
   });
 
   describe('when the selected country is Brazil', () => {
