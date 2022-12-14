@@ -1,7 +1,15 @@
+import { useState } from 'react';
+
 export const Form = () => {
+  const [country, setCountry] = useState('');
+
   return (
     <form aria-label="Employee Onboarding">
-      <select name="country" defaultValue="">
+      <select
+        name="country"
+        value={country}
+        onChange={(event) => setCountry(event.target.value)}
+      >
         <option value="" disabled>
           Select a country
         </option>
@@ -31,6 +39,13 @@ export const Form = () => {
         type="number"
         name="holidayAllowance"
       />
+
+      {country === 'Brazil' && (
+        <>
+          <label htmlFor="workingHours">Working hours</label>
+          <input aria-label="Working hours" type="number" name="workingHours" />
+        </>
+      )}
     </form>
   );
 };
