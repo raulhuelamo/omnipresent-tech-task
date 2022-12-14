@@ -9,12 +9,6 @@ describe('App', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
-    const { queryByText } = render(<App />);
-
-    expect(queryByText(/Welcome onboarding-form/i)).toBeNull();
-  });
-
   it('should render the onboarding form', () => {
     const { queryByRole } = render(<App />);
 
