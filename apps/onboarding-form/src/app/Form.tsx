@@ -26,10 +26,15 @@ export const Form = () => {
   const [dateOfBirth, setDateOfBirth] = useState('');
   // TODO: Validate date format
   const isDateOfBirthValid = dateOfBirth.trim().length > 0;
-  const onDateOfBirthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const date = toShortISOString(new Date(event.target.value));
-    setDateOfBirth(date);
-  };
+  const onDateOfBirthChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setDateOfBirth(event.target.value);
+
+  const [holidayAllowance, setHolidayAllowance] = useState('');
+  // TODO: Rules
+  const isHolidayAllowanceValid = Boolean(Number(holidayAllowance));
+  const onHolidayAllowanceChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => setHolidayAllowance(event.target.value);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,11 +43,19 @@ export const Form = () => {
       isFirstNameValid &&
       isCountryValid &&
       isLastNameValid &&
-      isDateOfBirthValid;
+      isDateOfBirthValid &&
+      isHolidayAllowanceValid;
 
     if (!isValid) return;
 
-    const onboardedEmployee = { country, firstName, lastName, dateOfBirth };
+    const onboardedEmployee = {
+      country,
+      firstName,
+      lastName,
+      dateOfBirth,
+      holidayAllowance: Number(holidayAllowance),
+    };
+
     console.log(onboardedEmployee);
   };
 
@@ -98,6 +111,8 @@ export const Form = () => {
         aria-label="Holiday allowance"
         type="number"
         name="holidayAllowance"
+        value={holidayAllowance}
+        onChange={onHolidayAllowanceChange}
         required
       />
 

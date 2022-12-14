@@ -11,8 +11,9 @@ enum Country {
 type FormFixture = {
   firstName: string;
   lastName: string;
-  country: Country | '';
+  country: string;
   dateOfBirth: string;
+  holidayAllowance: string;
 };
 
 describe('Form', () => {
@@ -76,6 +77,7 @@ describe('Form', () => {
     lastName,
     country,
     dateOfBirth,
+    holidayAllowance,
   }: FormFixture) => {
     fireEvent.change(countryField, {
       target: { value: country },
@@ -89,6 +91,9 @@ describe('Form', () => {
     fireEvent.change(dateOfBirthField, {
       target: { value: dateOfBirth },
     });
+    fireEvent.change(holidayAllowanceField, {
+      target: { value: holidayAllowance },
+    });
   };
 
   const clearForm = () => {
@@ -97,6 +102,7 @@ describe('Form', () => {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
+      holidayAllowance: '',
     });
   };
 
@@ -223,6 +229,7 @@ describe('Form', () => {
         firstName: 'Thomas',
         lastName: 'Anderson',
         dateOfBirth: '1962-03-11',
+        holidayAllowance: '30',
       });
 
       submitForm();
@@ -232,6 +239,7 @@ describe('Form', () => {
         firstName: 'Thomas',
         lastName: 'Anderson',
         dateOfBirth: '1962-03-11',
+        holidayAllowance: 30,
       });
     });
   });
