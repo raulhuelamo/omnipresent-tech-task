@@ -1,8 +1,6 @@
 import { Form } from './components/Form';
 import logo from '../assets/omnipresent.png';
 
-// #ff4389
-
 export const App = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
@@ -10,7 +8,7 @@ export const App = () => {
       <h1 className="font-bold font-mono text-center text-2xl mb-5">
         Employee Onboarding
       </h1>
-      <div className="bg-white shadow w-full max-w-[1000px] rounded-lg p-8 md:mx-8 md:w-auto lg:mx-auto">
+      <div className="bg-white shadow w-full max-w-[1000px] rounded-lg px-4 py-8 md:mx-8 md:w-auto lg:mx-auto">
         <Form />
       </div>
     </div>

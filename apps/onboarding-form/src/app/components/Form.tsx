@@ -34,10 +34,10 @@ export const Form = () => {
       aria-label="Employee Onboarding"
       onSubmit={handleSubmit}
     >
-      <div className="w-full">
+      <div className="w-full px-2">
         <label
           htmlFor="country"
-          className="font-semibold text-sm text-gray-600 pb-1 block"
+          className="font-semibold text-sm text-gray-900 pb-1 block"
         >
           Country
         </label>
@@ -46,7 +46,7 @@ export const Form = () => {
           value={country}
           onChange={onCountryChange}
           required
-          className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+          className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
         >
           <option value="" disabled>
             Select a country
@@ -57,10 +57,10 @@ export const Form = () => {
         </select>
       </div>
 
-      <div className="w-full md:w-1/2 lg:w-1/3">
+      <div className="w-full md:w-1/3 lg:w-1/3 px-2">
         <label
           htmlFor="firstName"
-          className="font-semibold text-sm text-gray-600 pb-1 block"
+          className="font-semibold text-sm text-gray-900 pb-1 block"
         >
           First name
         </label>
@@ -71,14 +71,14 @@ export const Form = () => {
           value={firstName}
           onChange={onFirstNameChange}
           required
-          className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+          className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
         />
       </div>
 
-      <div className="w-full md:w-1/2 lg:w-1/3">
+      <div className="w-full md:w-1/3 lg:w-1/3 px-2">
         <label
           htmlFor="lastName"
-          className="font-semibold text-sm text-gray-600 pb-1 block"
+          className="font-semibold text-sm text-gray-900 pb-1 block"
         >
           Last name
         </label>
@@ -89,14 +89,14 @@ export const Form = () => {
           value={lastName}
           onChange={onLastNameChange}
           required
-          className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+          className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
         />
       </div>
 
-      <div className="w-full md:w-1/2 lg:w-1/3">
+      <div className="w-full md:w-1/3 lg:w-1/3 px-2">
         <label
           htmlFor="dateOfBirth"
-          className="font-semibold text-sm text-gray-600 pb-1 block"
+          className="font-semibold text-sm text-gray-900 pb-1 block"
         >
           Date of birth
         </label>
@@ -108,14 +108,14 @@ export const Form = () => {
           value={dateOfBirth}
           onChange={onDateOfBirthChange}
           required
-          className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+          className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
         ></input>
       </div>
 
-      <div className="w-full md:w-1/2 lg:w-1/3">
+      <div className="w-full md:w-1/2 px-2">
         <label
           htmlFor="holidayAllowance"
-          className="font-semibold text-sm text-gray-600 pb-1 block"
+          className="font-semibold text-sm text-gray-900 pb-1 block"
         >
           Holiday allowance
         </label>
@@ -129,15 +129,15 @@ export const Form = () => {
           max={maximumHolidayAllowance}
           step="1"
           required
-          className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+          className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
         />
       </div>
 
       {country === 'Brazil' && (
-        <div className="w-full md:w-1/2 lg:w-1/3">
+        <div className="w-full md:w-1/2 px-2">
           <label
             htmlFor="workingHours"
-            className="font-semibold text-sm text-gray-600 pb-1 block"
+            className="font-semibold text-sm text-gray-900 pb-1 block"
           >
             Working hours
           </label>
@@ -148,35 +148,17 @@ export const Form = () => {
             value={workingHours}
             onChange={onWorkingHoursChange}
             required
-            className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+            className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
           />
         </div>
       )}
 
       {country === 'Ghana' && (
         <>
-          <div className="w-full md:w-1/2 lg:w-1/3">
-            <label
-              htmlFor="maritalStatus"
-              className="font-semibold text-sm text-gray-600 pb-1 block"
-            >
-              Marital status
-            </label>
-            <input
-              aria-label="Marital status"
-              type="text"
-              name="maritalStatus"
-              value={maritalStatus}
-              onChange={onMaritalStatusChange}
-              required
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-            />
-          </div>
-
-          <div className="w-full md:w-1/2 lg:w-1/3">
+          <div className="w-full md:w-1/2 px-2">
             <label
               htmlFor="numberOfChildren"
-              className="font-semibold text-sm text-gray-600 pb-1 block"
+              className="font-semibold text-sm text-gray-900 pb-1 block"
             >
               Number of children
             </label>
@@ -187,18 +169,14 @@ export const Form = () => {
               value={numberOfChildren}
               onChange={onNumberOfChildrenChange}
               required
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
             />
           </div>
-        </>
-      )}
 
-      {country === 'Spain' && (
-        <>
-          <div className="w-full md:w-1/2 lg:w-1/3">
+          <div className="w-full px-2">
             <label
               htmlFor="maritalStatus"
-              className="font-semibold text-sm text-gray-600 pb-1 block"
+              className="font-semibold text-sm text-gray-900 pb-1 block"
             >
               Marital status
             </label>
@@ -209,14 +187,18 @@ export const Form = () => {
               value={maritalStatus}
               onChange={onMaritalStatusChange}
               required
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
             />
           </div>
+        </>
+      )}
 
-          <div className="w-full md:w-1/2 lg:w-1/3">
+      {country === 'Spain' && (
+        <>
+          <div className="w-full md:w-1/2 px-2">
             <label
               htmlFor="socialInsuranceNumber"
-              className="font-semibold text-sm text-gray-600 pb-1 block"
+              className="font-semibold text-sm text-gray-900 pb-1 block"
             >
               Social insurance number
             </label>
@@ -227,13 +209,31 @@ export const Form = () => {
               value={socialInsuranceNumber}
               onChange={onSocialInsuranceNumberChange}
               required
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+            />
+          </div>
+
+          <div className="w-full px-2">
+            <label
+              htmlFor="maritalStatus"
+              className="font-semibold text-sm text-gray-900 pb-1 block"
+            >
+              Marital status
+            </label>
+            <input
+              aria-label="Marital status"
+              type="text"
+              name="maritalStatus"
+              value={maritalStatus}
+              onChange={onMaritalStatusChange}
+              required
+              className="border border-gray-600 rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
             />
           </div>
         </>
       )}
 
-      <button className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+      <button className="bg-pink-500 hover:bg-pink-600 transition duration-200 text-white w-full py-2 mx-2 mt-2 rounded-lg text-lg font-semibold text-center inline-block">
         Submit
       </button>
     </form>
