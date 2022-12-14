@@ -8,14 +8,6 @@ enum Country {
   Spain = 'Spain',
 }
 
-type FormFixture = {
-  firstName: string;
-  lastName: string;
-  country: string;
-  dateOfBirth: string;
-  holidayAllowance: string;
-};
-
 describe('Form', () => {
   let countryField: HTMLSelectElement;
   let countryFieldUnselectedOption: HTMLOptionElement;
@@ -72,37 +64,59 @@ describe('Form', () => {
     );
   };
 
-  const fillForm = ({
-    firstName,
-    lastName,
-    country,
-    dateOfBirth,
-    holidayAllowance,
-  }: FormFixture) => {
-    fireEvent.change(countryField, {
-      target: { value: country },
-    });
+  const fillForm = (fixture: {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    holidayAllowance: string;
+    workingHours?: string;
+    maritalStatus?: string;
+    numberOfChildren?: string;
+  }) => {
     fireEvent.change(firstNameField, {
-      target: { value: firstName },
+      target: { value: fixture.firstName },
     });
+
     fireEvent.change(lastNameField, {
-      target: { value: lastName },
+      target: { value: fixture.lastName },
     });
+
     fireEvent.change(dateOfBirthField, {
-      target: { value: dateOfBirth },
+      target: { value: fixture.dateOfBirth },
     });
+
     fireEvent.change(holidayAllowanceField, {
-      target: { value: holidayAllowance },
+      target: { value: fixture.holidayAllowance },
     });
+
+    if (workingHoursField) {
+      fireEvent.change(workingHoursField, {
+        target: { value: fixture.workingHours },
+      });
+    }
+
+    if (maritalStatusField) {
+      fireEvent.change(maritalStatusField, {
+        target: { value: fixture.maritalStatus },
+      });
+    }
+
+    if (numberOfChildrenField) {
+      fireEvent.change(numberOfChildrenField, {
+        target: { value: fixture.numberOfChildren },
+      });
+    }
   };
 
   const clearForm = () => {
     fillForm({
-      country: '',
       firstName: '',
       lastName: '',
       dateOfBirth: '',
       holidayAllowance: '',
+      workingHours: '',
+      numberOfChildren: '',
+      maritalStatus: '',
     });
   };
 
@@ -207,15 +221,12 @@ describe('Form', () => {
   describe('when submitting the form', () => {
     const consoleLog = jest.spyOn(console, 'log').mockImplementation();
 
-    beforeEach(() => {
-      arrangeForm();
-    });
-
     afterEach(() => {
       consoleLog.mockReset();
     });
 
     test('if any field is missing to be filled, do nothing', () => {
+      arrangeForm();
       clearForm();
 
       submitForm();
@@ -224,12 +235,13 @@ describe('Form', () => {
     });
 
     test('for Brazil, if all the fields are filled correctly, log the onboarded employee to the console', () => {
+      arrangeForm(Country.Brazil);
       fillForm({
-        country: Country.Brazil,
         firstName: 'Thomas',
         lastName: 'Anderson',
         dateOfBirth: '1962-03-11',
         holidayAllowance: '30',
+        workingHours: '40',
       });
 
       submitForm();
@@ -240,6 +252,31 @@ describe('Form', () => {
         lastName: 'Anderson',
         dateOfBirth: '1962-03-11',
         holidayAllowance: 30,
+        workingHours: 40,
+      });
+    });
+
+    test('for Ghana, if all the fields are filled correctly, log the onboarded employee to the console', () => {
+      arrangeForm(Country.Ghana);
+      fillForm({
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: '30',
+        maritalStatus: 'Single',
+        numberOfChildren: '1',
+      });
+
+      submitForm();
+
+      expect(consoleLog).toHaveBeenCalledWith({
+        country: 'Ghana',
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: 30,
+        maritalStatus: 'Single',
+        numberOfChildren: 1,
       });
     });
   });

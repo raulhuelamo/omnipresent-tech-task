@@ -36,16 +36,54 @@ export const Form = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => setHolidayAllowance(event.target.value);
 
+  const [workingHours, setWorkingHours] = useState('');
+  // TODO: Rules
+  const isWorkingHoursValid = Boolean(Number(holidayAllowance));
+  const onWorkingHoursChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setWorkingHours(event.target.value);
+
+  const [maritalStatus, setMaritalStatus] = useState('');
+  const isMaritalStatusValid = maritalStatus.trim().length > 0;
+  const onMaritalStatusChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setMaritalStatus(event.target.value);
+
+  const [numberOfChildren, setNumberOfChildren] = useState('');
+  const isNumberOfChildrenValid = numberOfChildren.trim().length > 0;
+  const onNumberOfChildrenChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => setNumberOfChildren(event.target.value);
+
+  const validateForm = () => {
+    if (country === 'Brazil') {
+      return (
+        isCountryValid &&
+        isFirstNameValid &&
+        isLastNameValid &&
+        isDateOfBirthValid &&
+        isHolidayAllowanceValid &&
+        isWorkingHoursValid
+      );
+    }
+
+    if (country === 'Ghana') {
+      return (
+        isCountryValid &&
+        isFirstNameValid &&
+        isLastNameValid &&
+        isDateOfBirthValid &&
+        isHolidayAllowanceValid &&
+        isMaritalStatusValid &&
+        isNumberOfChildrenValid
+      );
+    }
+
+    return false;
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isValid =
-      isFirstNameValid &&
-      isCountryValid &&
-      isLastNameValid &&
-      isDateOfBirthValid &&
-      isHolidayAllowanceValid;
-
+    const isValid = validateForm();
     if (!isValid) return;
 
     const onboardedEmployee = {
@@ -54,6 +92,15 @@ export const Form = () => {
       lastName,
       dateOfBirth,
       holidayAllowance: Number(holidayAllowance),
+
+      ...(country === 'Brazil' && {
+        workingHours: Number(workingHours),
+      }),
+
+      ...(country === 'Ghana' && {
+        maritalStatus,
+        numberOfChildren: Number(numberOfChildren),
+      }),
     };
 
     console.log(onboardedEmployee);
@@ -123,6 +170,8 @@ export const Form = () => {
             aria-label="Working hours"
             type="number"
             name="workingHours"
+            value={workingHours}
+            onChange={onWorkingHoursChange}
             required
           />
         </>
@@ -131,13 +180,22 @@ export const Form = () => {
       {country === 'Ghana' && (
         <>
           <label htmlFor="maritalStatus">Marital status</label>
-          <input aria-label="Marital status" type="text" name="maritalStatus" />
+          <input
+            aria-label="Marital status"
+            type="text"
+            name="maritalStatus"
+            value={maritalStatus}
+            onChange={onMaritalStatusChange}
+            required
+          />
 
           <label htmlFor="numberOfChildren">Number of children</label>
           <input
             aria-label="Number of children"
             type="number"
             name="numberOfChildren"
+            value={numberOfChildren}
+            onChange={onNumberOfChildrenChange}
             required
           />
         </>
