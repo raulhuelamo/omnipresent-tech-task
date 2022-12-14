@@ -3,15 +3,21 @@ import { render, screen } from '@testing-library/react';
 import { App } from './App';
 
 describe('App', () => {
-  it('should render successfully', () => {
+  beforeEach(() => {
     render(<App />);
   });
 
   it('should render the onboarding form', () => {
-    render(<App />);
-
     const form = screen.queryByRole('form', { name: /employee onboarding/i });
 
     expect(form).toBeTruthy();
+  });
+
+  it('should render the app heading', () => {
+    const heading = screen.queryByRole('heading', {
+      name: 'Omnipresent Employee Onboarding',
+    });
+
+    expect(heading).toBeTruthy();
   });
 });
