@@ -1,0 +1,73 @@
+{
+  "root": "apps/onboarding-form",
+  "sourceRoot": "apps/onboarding-form/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/onboarding-form",
+        "index": "apps/onboarding-form/src/index.html",
+        "baseHref": "/",
+        "main": "apps/onboarding-form/src/main.tsx",
+        "polyfills": "apps/onboarding-form/src/polyfills.ts",
+        "tsConfig": "apps/onboarding-form/tsconfig.app.json",
+        "assets": [
+          "apps/onboarding-form/src/favicon.ico",
+          "apps/onboarding-form/src/assets"
+        ],
+        "styles": ["apps/onboarding-form/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/onboarding-form/src/environments/environment.ts",
+              "with": "apps/onboarding-form/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "onboarding-form:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "onboarding-form:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/onboarding-form/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/onboarding-form"],
+      "options": {
+        "jestConfig": "apps/onboarding-form/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "onboarding-form": "apps/onboarding-form",
+    "onboarding-form-e2e": "apps/onboarding-form-e2e"
+  }
+}
