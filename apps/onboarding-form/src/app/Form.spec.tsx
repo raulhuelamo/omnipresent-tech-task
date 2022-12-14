@@ -65,6 +65,9 @@ describe('Form', () => {
       ).toBeTruthy();
 
       expect(screen.getByLabelText(/working hours/i)).toBeTruthy();
+      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/marital status/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
     });
   });
 
@@ -82,6 +85,9 @@ describe('Form', () => {
       ).toBeTruthy();
 
       expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
+      expect(screen.queryByLabelText(/social insurance number/i)).toBeTruthy();
     });
   });
 
@@ -99,6 +105,9 @@ describe('Form', () => {
       ).toBeTruthy();
 
       expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
+      expect(screen.queryByLabelText(/number of children/i)).toBeTruthy();
+      expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
+      expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
     });
   });
 });

@@ -13,9 +13,9 @@ export const Form = () => {
         <option value="" disabled>
           Select a country
         </option>
-        <option>Spain</option>
-        <option>Ghana</option>
         <option>Brazil</option>
+        <option>Ghana</option>
+        <option>Spain</option>
       </select>
 
       <label htmlFor="firstName">First name</label>
@@ -44,6 +44,34 @@ export const Form = () => {
         <>
           <label htmlFor="workingHours">Working hours</label>
           <input aria-label="Working hours" type="number" name="workingHours" />
+        </>
+      )}
+
+      {country === 'Ghana' && (
+        <>
+          <label htmlFor="maritalStatus">Marital status</label>
+          <input aria-label="Marital status" type="text" name="maritalStatus" />
+
+          <label htmlFor="numberOfChildren">Number of children</label>
+          <input
+            aria-label="Number of children"
+            type="number"
+            name="numberOfChildren"
+          />
+        </>
+      )}
+
+      {country === 'Spain' && (
+        <>
+          <label htmlFor="maritalStatus">Marital status</label>
+          <input aria-label="Marital status" type="text" name="maritalStatus" />
+
+          <label htmlFor="socialInsuranceNumber">Social insurance number</label>
+          <input
+            aria-label="Social insurance  number"
+            type="text"
+            name="socialInsuranceNumber"
+          />
         </>
       )}
     </form>
