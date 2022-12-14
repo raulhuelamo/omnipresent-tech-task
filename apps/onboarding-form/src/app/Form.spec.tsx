@@ -8,6 +8,13 @@ enum Country {
   Spain = 'Spain',
 }
 
+type FormFixture = {
+  firstName: string;
+  lastName: string;
+  country: Country | '';
+  dateOfBirth: string;
+};
+
 describe('Form', () => {
   let countryField: HTMLSelectElement;
   let countryFieldUnselectedOption: HTMLOptionElement;
@@ -25,7 +32,7 @@ describe('Form', () => {
   let maritalStatusField: HTMLInputElement | null;
   let socialInsuranceNumberField: HTMLInputElement | null;
 
-  const arrangeComponent = (country?: Country) => {
+  const arrangeForm = (country?: Country) => {
     render(<Form />);
 
     countryField = screen.getByRole('combobox');
@@ -64,12 +71,45 @@ describe('Form', () => {
     );
   };
 
+  const fillForm = ({
+    firstName,
+    lastName,
+    country,
+    dateOfBirth,
+  }: FormFixture) => {
+    fireEvent.change(countryField, {
+      target: { value: country },
+    });
+    fireEvent.change(firstNameField, {
+      target: { value: firstName },
+    });
+    fireEvent.change(lastNameField, {
+      target: { value: lastName },
+    });
+    fireEvent.change(dateOfBirthField, {
+      target: { value: dateOfBirth },
+    });
+  };
+
+  const clearForm = () => {
+    fillForm({
+      country: '',
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '',
+    });
+  };
+
+  const submitForm = () => {
+    fireEvent.click(submitButton);
+  };
+
   describe('by default', () => {
     beforeEach(() => {
-      arrangeComponent();
+      arrangeForm();
     });
 
-    it('should render a "Country of work" field, and its options', () => {
+    test('render "Country of work" field, and its options', () => {
       expect(countryField).toBeTruthy();
       expect(countryFieldUnselectedOption.selected).toBeTruthy();
       expect(countryFieldSpainOption.selected).toBeFalsy();
@@ -77,41 +117,41 @@ describe('Form', () => {
       expect(countryFieldBrazilOption.selected).toBeFalsy();
     });
 
-    it('should render "First name" field', () => {
+    test('render "First name" field', () => {
       expect(firstNameField).toBeTruthy();
     });
 
-    it('should render "Last name" field', () => {
+    test('render "Last name" field', () => {
       expect(lastNameField).toBeTruthy();
     });
 
-    it('should render "Date of birth" field', () => {
+    test('render "Date of birth" field', () => {
       expect(dateOfBirthField).toBeTruthy();
     });
 
-    it('should render "Holiday allowance" field', () => {
+    test('render "Holiday allowance" field', () => {
       expect(holidayAllowanceField).toBeTruthy();
     });
 
-    it('should render a Submit button', () => {
+    test('render a Submit button', () => {
       expect(submitButton).toBeTruthy();
     });
   });
 
   describe('when the selected country is Brazil', () => {
     beforeEach(() => {
-      arrangeComponent(Country.Brazil);
+      arrangeForm(Country.Brazil);
     });
 
-    it('should have Brazil selected as a country', () => {
+    test('have Brazil selected as a country', () => {
       expect(countryFieldBrazilOption.selected).toBeTruthy();
     });
 
-    it('should render its country-specific fields', () => {
+    test('render its country-specific fields', () => {
       expect(workingHoursField).toBeTruthy();
     });
 
-    it('should not render any country-specific fields from different countries', () => {
+    test('not render any country-specific fields from different countries', () => {
       expect(numberOfChildrenField).toBeFalsy();
       expect(maritalStatusField).toBeFalsy();
       expect(socialInsuranceNumberField).toBeFalsy();
@@ -120,19 +160,19 @@ describe('Form', () => {
 
   describe('when the selected country is Spain', () => {
     beforeEach(() => {
-      arrangeComponent(Country.Spain);
+      arrangeForm(Country.Spain);
     });
 
-    it('should have Spain selected as a country', () => {
+    test('have Spain selected as a country', () => {
       expect(countryFieldSpainOption.selected).toBeTruthy();
     });
 
-    it('should render its country-specific fields', () => {
+    test('render its country-specific fields', () => {
       expect(maritalStatusField).toBeTruthy();
       expect(socialInsuranceNumberField).toBeTruthy();
     });
 
-    it('should not render any country-specific fields from different countries', () => {
+    test('not render any country-specific fields from different countries', () => {
       expect(workingHoursField).toBeFalsy();
       expect(numberOfChildrenField).toBeFalsy();
     });
@@ -140,19 +180,19 @@ describe('Form', () => {
 
   describe('when the selected country is Ghana', () => {
     beforeEach(() => {
-      arrangeComponent(Country.Ghana);
+      arrangeForm(Country.Ghana);
     });
 
-    it('should have Ghana selected as a country', () => {
+    test('have Ghana selected as a country', () => {
       expect(countryFieldGhanaOption.selected).toBeTruthy();
     });
 
-    it('should render its country-specific fields', () => {
+    test('render its country-specific fields', () => {
       expect(numberOfChildrenField).toBeTruthy();
       expect(maritalStatusField).toBeTruthy();
     });
 
-    it('should not render any country-specific fields from different countries', () => {
+    test('not render any country-specific fields from different countries', () => {
       expect(workingHoursField).toBeFalsy();
       expect(socialInsuranceNumberField).toBeFalsy();
     });
@@ -162,35 +202,36 @@ describe('Form', () => {
     const consoleLog = jest.spyOn(console, 'log').mockImplementation();
 
     beforeEach(() => {
-      arrangeComponent();
+      arrangeForm();
     });
 
     afterEach(() => {
       consoleLog.mockReset();
     });
 
-    it('should do nothing in case any field is missing to be filled', () => {
-      fireEvent.click(submitButton);
+    test('if any field is missing to be filled, do nothing', () => {
+      clearForm();
+
+      submitForm();
 
       expect(consoleLog).not.toHaveBeenCalled();
     });
 
-    it('should log the form values to the console, in case all the fields are filled correctly', () => {
-      fireEvent.change(countryField, {
-        target: { value: 'Brazil' },
+    test('for Brazil, if all the fields are filled correctly, log the onboarded employee to the console', () => {
+      fillForm({
+        country: Country.Brazil,
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
       });
-      fireEvent.change(firstNameField, {
-        target: { value: 'Thomas' },
-      });
-      fireEvent.change(lastNameField, {
-        target: { value: 'Anderson' },
-      });
-      fireEvent.click(submitButton);
+
+      submitForm();
 
       expect(consoleLog).toHaveBeenCalledWith({
         country: 'Brazil',
         firstName: 'Thomas',
         lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
       });
     });
   });
