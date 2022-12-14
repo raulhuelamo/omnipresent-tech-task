@@ -131,20 +131,39 @@ describe('Form', () => {
   });
 
   describe('when submitting the form', () => {
+    const consoleLog = jest.spyOn(console, 'log').mockImplementation();
+
     beforeEach(() => {
       render(<Form />);
     });
 
-    it('should log the form values to the console', () => {
-      const consoleLog = jest.spyOn(console, 'log').mockImplementation();
-
-      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
-
-      expect(consoleLog).toHaveBeenCalled();
+    afterEach(() => {
+      consoleLog.mockReset();
     });
 
-    // it('should do nothing in case any field is missing', () => {
-    //   fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
-    // });
+    it('should do nothing in case any field is missing to be filled', () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(consoleLog).not.toHaveBeenCalled();
+    });
+
+    it('should log the form values to the console, in case all the fields are filled correctly', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'Brazil' },
+      });
+      fireEvent.change(screen.getByLabelText(/first name/i), {
+        target: { value: 'Thomas' },
+      });
+      fireEvent.change(screen.getByLabelText(/last name/i), {
+        target: { value: 'Anderson' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(consoleLog).toHaveBeenCalledWith({
+        country: 'Brazil',
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+      });
+    });
   });
 });
