@@ -4,7 +4,13 @@ export const Form = () => {
   const [country, setCountry] = useState('');
 
   return (
-    <form aria-label="Employee Onboarding">
+    <form
+      aria-label="Employee Onboarding"
+      onSubmit={(event) => {
+        event.preventDefault();
+        console.log('');
+      }}
+    >
       <select
         name="country"
         value={country}

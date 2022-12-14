@@ -129,4 +129,22 @@ describe('Form', () => {
       expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
     });
   });
+
+  describe('when submitting the form', () => {
+    beforeEach(() => {
+      render(<Form />);
+    });
+
+    it('should log the form values to the console', () => {
+      const consoleLog = jest.spyOn(console, 'log').mockImplementation();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(consoleLog).toHaveBeenCalled();
+    });
+
+    // it('should do nothing in case any field is missing', () => {
+    //   fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    // });
+  });
 });
