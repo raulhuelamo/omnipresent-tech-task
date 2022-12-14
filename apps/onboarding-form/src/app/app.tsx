@@ -2,7 +2,15 @@
 import styles from './app.module.css';
 
 export function App() {
-  return <form aria-label="Edit a Project" name="projectForm" />;
+  return (
+    <form aria-label="Employee Onboarding">
+      <select name="country">
+        <option>Spain</option>
+        <option>Ghana</option>
+        <option>Brazil</option>
+      </select>
+    </form>
+  );
 }
 
 export default App;
