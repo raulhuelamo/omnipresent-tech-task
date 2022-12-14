@@ -1,22 +1,18 @@
-export const isValidString = (value: unknown) => {
-  if (typeof value !== 'string') return false;
+export const isValidString = (value: string) => {
   if (value.trim().length === 0) return false;
   return true;
 };
-export const isValidNumber = (value: unknown) => {
-  if (typeof value !== 'string') return false;
+
+export const isValidNumber = (value: string) => {
   return !isNaN(Number(value)) && !isNaN(parseFloat(value));
 };
 
-export const isValidCountry = (value: unknown) => {
-  if (typeof value !== 'string') return false;
+export const isValidCountry = (value: string) => {
   const countries = ['Brazil', 'Ghana', 'Spain'];
   return countries.includes(value);
 };
 
-export const isValidShortIsoDate = (value: unknown) => {
-  if (typeof value !== 'string') return false;
-
+export const isValidShortIsoDate = (value: string) => {
   const regex = /^\d{4}-\d{2}-\d{2}$/;
 
   if (value.match(regex) === null) {
@@ -24,12 +20,5 @@ export const isValidShortIsoDate = (value: unknown) => {
   }
 
   const date = new Date(value);
-
-  const timestamp = date.getTime();
-
-  if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) {
-    return false;
-  }
-
   return date.toISOString().startsWith(value);
 };
