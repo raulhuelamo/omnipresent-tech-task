@@ -7,6 +7,7 @@ export function App() {
     <>
       <NxWelcome title="onboarding-form" />
       <div />
+      <form aria-label="Edit a Project" name="projectForm"></form>
     </>
   );
 }

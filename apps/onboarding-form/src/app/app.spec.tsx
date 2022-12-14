@@ -14,4 +14,12 @@ describe('App', () => {
 
     expect(getByText(/Welcome onboarding-form/i)).toBeTruthy();
   });
+
+  it('should render the onboarding form', () => {
+    const { getByRole } = render(<App />);
+
+    const form = getByRole('form');
+
+    expect(form).toBeTruthy();
+  });
 });
