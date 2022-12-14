@@ -14,10 +14,12 @@ describe('App', () => {
   });
 
   it('should render the app heading', () => {
+    const logo = screen.queryByAltText('Logo');
     const heading = screen.queryByRole('heading', {
-      name: 'Omnipresent Employee Onboarding',
+      name: 'Employee Onboarding',
     });
 
+    expect(logo).toBeTruthy();
     expect(heading).toBeTruthy();
   });
 });
