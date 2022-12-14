@@ -35,13 +35,13 @@ describe('Form', () => {
   it('should render "First name" field', () => {
     render(<App />);
 
-    expect(screen.getByRole('textbox', { name: /first name/i })).toBeTruthy();
+    expect(screen.getByLabelText(/first name/i)).toBeTruthy();
   });
 
   it('should render "Last name" field', () => {
     render(<App />);
 
-    expect(screen.getByRole('textbox', { name: /last name/i })).toBeTruthy();
+    expect(screen.getByLabelText(/last name/i)).toBeTruthy();
   });
 
   it('should render "Date of birth" field', () => {
