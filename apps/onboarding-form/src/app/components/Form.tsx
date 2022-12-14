@@ -1,5 +1,5 @@
 import { useOnboardingForm } from '../hooks/useOnboardingForm';
-import { toShortISOString } from '../helpers/toShortISOString';
+import { toShortISOString } from '../helpers/date';
 
 export const Form = () => {
   const today = toShortISOString(new Date());
