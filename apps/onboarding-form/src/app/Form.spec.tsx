@@ -3,13 +3,17 @@ import { render, screen } from '@testing-library/react';
 import { Form } from './Form';
 
 describe('Form', () => {
-  it('should render a "Country of work" field, with the right options', () => {
+  it('should render a "Country of work" field, and its options', () => {
     render(<Form />);
 
     expect(screen.getByRole('combobox')).toBeTruthy();
     expect(
-      screen.getByRole<HTMLOptionElement>('option', { name: 'Spain' }).selected
+      screen.getByRole<HTMLOptionElement>('option', { name: /country/i })
+        .selected
     ).toBeTruthy();
+    expect(
+      screen.getByRole<HTMLOptionElement>('option', { name: 'Spain' }).selected
+    ).toBeFalsy();
     expect(
       screen.getByRole<HTMLOptionElement>('option', { name: 'Ghana' }).selected
     ).toBeFalsy();

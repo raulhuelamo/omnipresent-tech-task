@@ -1,7 +1,10 @@
 export const Form = () => {
   return (
     <form aria-label="Employee Onboarding">
-      <select name="country">
+      <select name="country" defaultValue="">
+        <option value="" disabled>
+          Select a country
+        </option>
         <option>Spain</option>
         <option>Ghana</option>
         <option>Brazil</option>
