@@ -16,6 +16,8 @@ export const Form = () => {
     onDateOfBirthChange,
     holidayAllowance,
     onHolidayAllowanceChange,
+    minimumHolidayAllowance,
+    maximumHolidayAllowance,
     workingHours,
     onWorkingHoursChange,
     maritalStatus,
@@ -80,6 +82,9 @@ export const Form = () => {
         name="holidayAllowance"
         value={holidayAllowance}
         onChange={onHolidayAllowanceChange}
+        min={minimumHolidayAllowance}
+        max={maximumHolidayAllowance}
+        step="1"
         required
       />
 

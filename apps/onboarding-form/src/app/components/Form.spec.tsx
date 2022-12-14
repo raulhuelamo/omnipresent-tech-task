@@ -264,6 +264,21 @@ describe('Form', () => {
       });
     });
 
+    test('for Brazil, if the holiday allowance higher than 40, then do nothing', () => {
+      arrangeForm(Country.Brazil);
+      fillForm({
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: '50',
+        workingHours: '40',
+      });
+
+      submitForm();
+
+      expect(consoleLog).not.toHaveBeenCalled();
+    });
+
     test('for Ghana, if all the fields are filled correctly, log the onboarded employee to the console', () => {
       arrangeForm(Country.Ghana);
       fillForm({
@@ -310,6 +325,22 @@ describe('Form', () => {
         maritalStatus: 'Single',
         socialInsuranceNumber: '1234567890A',
       });
+    });
+
+    test('for Spain, if the holiday allowance lower than 30, then do nothing', () => {
+      arrangeForm(Country.Spain);
+      fillForm({
+        firstName: 'Thomas',
+        lastName: 'Anderson',
+        dateOfBirth: '1962-03-11',
+        holidayAllowance: '20',
+        maritalStatus: 'Single',
+        socialInsuranceNumber: '1234567890A',
+      });
+
+      submitForm();
+
+      expect(consoleLog).not.toHaveBeenCalled();
     });
   });
 });

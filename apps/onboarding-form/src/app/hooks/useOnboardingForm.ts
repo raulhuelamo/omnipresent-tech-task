@@ -24,8 +24,11 @@ export const useOnboardingForm = () => {
     setDateOfBirth(event.target.value);
 
   const [holidayAllowance, setHolidayAllowance] = useState('');
-  // TODO: Rules
-  const isHolidayAllowanceValid = Boolean(Number(holidayAllowance));
+  const minimumHolidayAllowance = country === 'Spain' ? 30 : 0;
+  const maximumHolidayAllowance = country === 'Brazil' ? 40 : Infinity;
+  const isHolidayAllowanceValid =
+    Number(holidayAllowance) >= minimumHolidayAllowance &&
+    Number(holidayAllowance) <= maximumHolidayAllowance;
   const onHolidayAllowanceChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => setHolidayAllowance(event.target.value);
@@ -135,6 +138,8 @@ export const useOnboardingForm = () => {
     onDateOfBirthChange,
     holidayAllowance,
     onHolidayAllowanceChange,
+    minimumHolidayAllowance,
+    maximumHolidayAllowance,
     workingHours,
     onWorkingHoursChange,
     maritalStatus,
