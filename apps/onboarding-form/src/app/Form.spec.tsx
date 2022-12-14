@@ -2,131 +2,159 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Form } from './Form';
 
+enum Country {
+  Brazil = 'Brazil',
+  Ghana = 'Ghana',
+  Spain = 'Spain',
+}
+
 describe('Form', () => {
+  let countryField: HTMLSelectElement;
+  let countryFieldUnselectedOption: HTMLOptionElement;
+  let countryFieldBrazilOption: HTMLOptionElement;
+  let countryFieldGhanaOption: HTMLOptionElement;
+  let countryFieldSpainOption: HTMLOptionElement;
+  let firstNameField: HTMLInputElement;
+  let lastNameField: HTMLInputElement;
+  let dateOfBirthField: HTMLInputElement;
+  let holidayAllowanceField: HTMLInputElement;
+  let submitButton: HTMLButtonElement;
+
+  let workingHoursField: HTMLInputElement | null;
+  let numberOfChildrenField: HTMLInputElement | null;
+  let maritalStatusField: HTMLInputElement | null;
+  let socialInsuranceNumberField: HTMLInputElement | null;
+
+  const arrangeComponent = (country?: Country) => {
+    render(<Form />);
+
+    countryField = screen.getByRole('combobox');
+    countryFieldUnselectedOption = screen.getByRole<HTMLOptionElement>(
+      'option',
+      { name: /country/i }
+    );
+    countryFieldBrazilOption = screen.getByRole<HTMLOptionElement>('option', {
+      name: 'Brazil',
+    });
+    countryFieldGhanaOption = screen.getByRole<HTMLOptionElement>('option', {
+      name: 'Ghana',
+    });
+    countryFieldSpainOption = screen.getByRole<HTMLOptionElement>('option', {
+      name: 'Spain',
+    });
+
+    firstNameField = screen.getByLabelText(/first name/i);
+    lastNameField = screen.getByLabelText(/last name/i);
+    dateOfBirthField = screen.getByLabelText(/date of birth/i);
+    holidayAllowanceField = screen.getByLabelText(/holiday allowance/i);
+
+    submitButton = screen.getByRole('button', { name: 'Submit' });
+
+    if (!country) return;
+
+    fireEvent.change(countryField, {
+      target: { value: country },
+    });
+
+    workingHoursField = screen.queryByLabelText(/working hours/i);
+    numberOfChildrenField = screen.queryByLabelText(/number of children/i);
+    maritalStatusField = screen.queryByLabelText(/marital status/i);
+    socialInsuranceNumberField = screen.queryByLabelText(
+      /social insurance number/i
+    );
+  };
+
   describe('by default', () => {
     beforeEach(() => {
-      render(<Form />);
+      arrangeComponent();
     });
 
     it('should render a "Country of work" field, and its options', () => {
-      expect(screen.getByRole('combobox')).toBeTruthy();
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: /country/i })
-          .selected
-      ).toBeTruthy();
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Spain' })
-          .selected
-      ).toBeFalsy();
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Ghana' })
-          .selected
-      ).toBeFalsy();
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Brazil' })
-          .selected
-      ).toBeFalsy();
+      expect(countryField).toBeTruthy();
+      expect(countryFieldUnselectedOption.selected).toBeTruthy();
+      expect(countryFieldSpainOption.selected).toBeFalsy();
+      expect(countryFieldGhanaOption.selected).toBeFalsy();
+      expect(countryFieldBrazilOption.selected).toBeFalsy();
     });
 
     it('should render "First name" field', () => {
-      expect(screen.getByLabelText(/first name/i)).toBeTruthy();
+      expect(firstNameField).toBeTruthy();
     });
 
     it('should render "Last name" field', () => {
-      expect(screen.getByLabelText(/last name/i)).toBeTruthy();
+      expect(lastNameField).toBeTruthy();
     });
 
     it('should render "Date of birth" field', () => {
-      expect(screen.getByLabelText(/date of birth/i)).toBeTruthy();
+      expect(dateOfBirthField).toBeTruthy();
     });
 
     it('should render "Holiday allowance" field', () => {
-      expect(screen.getByLabelText(/holiday allowance/i)).toBeTruthy();
+      expect(holidayAllowanceField).toBeTruthy();
     });
 
     it('should render a Submit button', () => {
-      expect(screen.getByRole('button', { name: 'Submit' })).toBeTruthy();
+      expect(submitButton).toBeTruthy();
     });
   });
 
   describe('when the selected country is Brazil', () => {
     beforeEach(() => {
-      render(<Form />);
-
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'Brazil' },
-      });
+      arrangeComponent(Country.Brazil);
     });
 
     it('should have Brazil selected as a country', () => {
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Brazil' })
-          .selected
-      ).toBeTruthy();
+      expect(countryFieldBrazilOption.selected).toBeTruthy();
     });
 
     it('should render its country-specific fields', () => {
-      expect(screen.getByLabelText(/working hours/i)).toBeTruthy();
+      expect(workingHoursField).toBeTruthy();
     });
 
     it('should not render any country-specific fields from different countries', () => {
-      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
-      expect(screen.queryByLabelText(/marital status/i)).toBeFalsy();
-      expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
+      expect(numberOfChildrenField).toBeFalsy();
+      expect(maritalStatusField).toBeFalsy();
+      expect(socialInsuranceNumberField).toBeFalsy();
     });
   });
 
   describe('when the selected country is Spain', () => {
     beforeEach(() => {
-      render(<Form />);
-
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'Spain' },
-      });
+      arrangeComponent(Country.Spain);
     });
 
     it('should have Spain selected as a country', () => {
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Spain' })
-          .selected
-      ).toBeTruthy();
+      expect(countryFieldSpainOption.selected).toBeTruthy();
     });
 
     it('should render its country-specific fields', () => {
-      expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
-      expect(screen.queryByLabelText(/social insurance number/i)).toBeTruthy();
+      expect(maritalStatusField).toBeTruthy();
+      expect(socialInsuranceNumberField).toBeTruthy();
     });
 
     it('should not render any country-specific fields from different countries', () => {
-      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
-      expect(screen.queryByLabelText(/number of children/i)).toBeFalsy();
+      expect(workingHoursField).toBeFalsy();
+      expect(numberOfChildrenField).toBeFalsy();
     });
   });
 
   describe('when the selected country is Ghana', () => {
     beforeEach(() => {
-      render(<Form />);
-
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'Ghana' },
-      });
+      arrangeComponent(Country.Ghana);
     });
 
     it('should have Ghana selected as a country', () => {
-      expect(
-        screen.getByRole<HTMLOptionElement>('option', { name: 'Ghana' })
-          .selected
-      ).toBeTruthy();
+      expect(countryFieldGhanaOption.selected).toBeTruthy();
     });
 
     it('should render its country-specific fields', () => {
-      expect(screen.queryByLabelText(/number of children/i)).toBeTruthy();
-      expect(screen.queryByLabelText(/marital status/i)).toBeTruthy();
+      expect(numberOfChildrenField).toBeTruthy();
+      expect(maritalStatusField).toBeTruthy();
     });
 
     it('should not render any country-specific fields from different countries', () => {
-      expect(screen.queryByLabelText(/working hours/i)).toBeFalsy();
-      expect(screen.queryByLabelText(/social insurance number/i)).toBeFalsy();
+      expect(workingHoursField).toBeFalsy();
+      expect(socialInsuranceNumberField).toBeFalsy();
     });
   });
 
@@ -134,7 +162,7 @@ describe('Form', () => {
     const consoleLog = jest.spyOn(console, 'log').mockImplementation();
 
     beforeEach(() => {
-      render(<Form />);
+      arrangeComponent();
     });
 
     afterEach(() => {
@@ -142,22 +170,22 @@ describe('Form', () => {
     });
 
     it('should do nothing in case any field is missing to be filled', () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      fireEvent.click(submitButton);
 
       expect(consoleLog).not.toHaveBeenCalled();
     });
 
     it('should log the form values to the console, in case all the fields are filled correctly', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
+      fireEvent.change(countryField, {
         target: { value: 'Brazil' },
       });
-      fireEvent.change(screen.getByLabelText(/first name/i), {
+      fireEvent.change(firstNameField, {
         target: { value: 'Thomas' },
       });
-      fireEvent.change(screen.getByLabelText(/last name/i), {
+      fireEvent.change(lastNameField, {
         target: { value: 'Anderson' },
       });
-      fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      fireEvent.click(submitButton);
 
       expect(consoleLog).toHaveBeenCalledWith({
         country: 'Brazil',
