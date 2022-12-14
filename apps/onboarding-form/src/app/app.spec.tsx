@@ -10,15 +10,15 @@ describe('App', () => {
   });
 
   it('should have a greeting as the title', () => {
-    const { getByText } = render(<App />);
+    const { queryByText } = render(<App />);
 
-    expect(getByText(/Welcome onboarding-form/i)).toBeTruthy();
+    expect(queryByText(/Welcome onboarding-form/i)).toBeNull();
   });
 
   it('should render the onboarding form', () => {
-    const { getByRole } = render(<App />);
+    const { queryByRole } = render(<App />);
 
-    const form = getByRole('form');
+    const form = queryByRole('form');
 
     expect(form).toBeTruthy();
   });
